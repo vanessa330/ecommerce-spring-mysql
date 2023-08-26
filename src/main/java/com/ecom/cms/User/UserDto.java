@@ -9,19 +9,19 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class UserDto {
-//    do not return the password & oneTimeToken
+//    Do not return the password & oneTimeToken
 
-    private Integer id;
+    Integer id;
 
-    private String name;
+    String name;
 
-    private String email;
+    String email;
 
-    private String status;
+    String status;
 
-    private String role;
+    String role;
 
     List<AddressDto> address; // table : address
 
-    private String wishlist;
+    String wishlist;
 }

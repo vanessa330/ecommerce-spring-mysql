@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class AddressController implements AddressService {
@@ -25,6 +27,10 @@ public class AddressController implements AddressService {
     @Override
     public ResponseEntity<String> addNewAddress(Map<String, Object> requestMap) {
         try {
+            if ((boolean) requestMap.get("defaultAddress")) {
+                addressRepository.clearDefaultAddress((int) requestMap.get("userId"));
+            }
+
             Address address = getAddressFromMap(requestMap, true);
             addressRepository.save(address);
 
@@ -46,6 +52,7 @@ public class AddressController implements AddressService {
 //        "city": "Tokyo",
 //        "country": "Japan",
 //        "zipCode": "1000",
+//        "defaultAddress": true
 //        "userId": 1,
 //        "id": 1
 //         }
@@ -60,7 +67,7 @@ public class AddressController implements AddressService {
                 .city(requestMap.get("city").toString())
                 .country(requestMap.get("country").toString())
                 .zipCode(requestMap.get("zipCode").toString())
-                .defaultAddress(false)
+                .defaultAddress((boolean) requestMap.get("defaultAddress"))
                 .build();
 
         Integer userId = ((Number) requestMap.get("userId")).intValue();
@@ -77,10 +84,15 @@ public class AddressController implements AddressService {
     @Override
     public ResponseEntity<String> updateAddress(Map<String, Object> requestMap) {
         try {
+
             int addressId = ((Number) requestMap.get("id")).intValue();
             Optional<Address> optional = addressRepository.findById(addressId);
             if (!optional.isPresent()) {
                 return MainUtils.getResponseEntity("Address id does not exist.", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            if ((boolean) requestMap.get("defaultAddress")) {
+                addressRepository.clearDefaultAddress((int) requestMap.get("userId"));
             }
 
             Address address = getAddressFromMap(requestMap, false);
@@ -92,6 +104,16 @@ public class AddressController implements AddressService {
         }
         return MainUtils.getResponseEntity(MainConstants.ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public List<AddressDto> getAddressByUser(int userId) {
+        List<Address> addressList = addressRepository.findByUser(userId);
+        List<AddressDto> addressDtoList = addressList.stream()
+                .map(address -> modelMapper.map(address, AddressDto.class))
+                .collect(Collectors.toList());
+        return addressDtoList;
+    }
+
 
     @Override
     public ResponseEntity<String> deleteAddress(int addressId) {

@@ -24,6 +24,11 @@ public class AddressRest {
         return addressService.updateAddress(requestMap);
     }
 
+    @GetMapping(path = "/get/{userId}")
+    public List<AddressDto> getAddressByUser(@PathVariable("userId") int userId) {
+        return addressService.getAddressByUser(userId);
+    }
+
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteAddress(@PathVariable("id") int addressId) {
         return addressService.deleteAddress(addressId);

@@ -6,26 +6,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddressDto {
 
-    private Integer id;
+     Integer id;
 
-    private String firstName;
+     String firstName;
 
-    private String lastName;
+     String lastName;
 
-    private String company;
+     String company;
 
-    private String phone;
+     String phone;
 
-    private String address1;
+     String address1;
 
-    private String address2;
+     String address2;
 
-    private String city;
+     String city;
 
-    private String country;
+     String country;
 
-    private String zipCode;
+     String zipCode;
 
-    private Boolean defaultAddress;
+     Boolean defaultAddress;
 
 }
