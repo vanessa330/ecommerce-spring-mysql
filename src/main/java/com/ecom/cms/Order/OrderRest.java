@@ -19,17 +19,17 @@ public class OrderRest {
         return orderService.addOrder(requestMap);
     }
 
-    @GetMapping(path = "get")
-    public List<OrderDto> getAllOrder() {
-        return orderService.getAllOrder();
+    @GetMapping(path = "/get")
+    public List<OrderDto> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
-    @GetMapping(path = "get/{id}")
-    public List<OrderDto> getOrderByUser(@PathVariable("id") int userId) {
-        return orderService.getOrderByUser(userId);
+    @GetMapping(path = "/getByUser/{id}")
+    public List<OrderDto> getByUser(@PathVariable("id") int userId) {
+        return orderService.getByUser(userId);
     }
 
-    @PatchMapping(path = "updateStatus")
+    @PatchMapping(path = "/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestBody Map<String, Object> requestMap) {
         return orderService.updateStatus(requestMap);
     }

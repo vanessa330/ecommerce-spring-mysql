@@ -1,4 +1,4 @@
-package com.ecom.cms.Category;
+package com.ecom.cms.Brand;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,9 @@
 # Ecommerce
 
+### Entity Relationship Diagram
+
+![](./erd.png)
+
 - Spring
     - Spring Web
     - Spring Data JPA

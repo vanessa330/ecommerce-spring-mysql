@@ -11,9 +11,9 @@ public interface OrderService {
 
     ResponseEntity<String> addOrder(Map<String, Object> requestMap);
 
-    List<OrderDto> getAllOrder();
+    List<OrderDto> getAllOrders();
 
-    List<OrderDto> getOrderByUser(int userId);
+    List<OrderDto> getByUser(int userId);
 
     ResponseEntity<String> updateStatus(Map<String, Object> requestMap);
 }

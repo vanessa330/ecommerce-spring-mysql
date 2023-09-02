@@ -1,9 +1,8 @@
 package com.ecom.cms.Product;
 
-import com.ecom.cms.Category.Brand;
+import com.ecom.cms.Brand.Brand;
 import com.ecom.cms.Category.Category;
 import com.ecom.cms.Image.Image;
-import com.ecom.cms.Order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -79,8 +78,4 @@ public class Product implements Serializable {
     @LastModifiedDate
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
 }

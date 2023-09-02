@@ -1,4 +1,4 @@
-package com.ecom.cms.Category;
+package com.ecom.cms.Brand;
 
 import com.ecom.cms.JWT.JwtFilter;
 import com.ecom.cms.UTILS.MainConstants;

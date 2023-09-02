@@ -1,6 +1,6 @@
 package com.ecom.cms.Order;
 
-import com.ecom.cms.Product.ProductDto;
+import com.ecom.cms.Order.OrderItem.OrderItemDto;
 import com.ecom.cms.User.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +15,17 @@ public class OrderDto {
 
     Integer id;
 
-    String orderNumber;
-
     String status;
+
+    BigDecimal subTotal;
+
+    BigDecimal shippingCost;
 
     BigDecimal totalPrice;
 
-    List<ProductDto> product; // find in table : product
+    List<OrderItemDto> orderItems; // table : order_item
 
-    User user; // find in table : user
+    User user; // table : user
 
     LocalDateTime createdDate;
 

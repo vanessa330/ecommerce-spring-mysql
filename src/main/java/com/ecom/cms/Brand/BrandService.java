@@ -1,4 +1,4 @@
-package com.ecom.cms.Category;
+package com.ecom.cms.Brand;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query(value = "SELECT * FORM order WHERE user_id=:userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM `order` WHERE user_id=:userId", nativeQuery = true)
     List<Order> findByUser(@Param("userId") int userId);
 
 }

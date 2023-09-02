@@ -1,4 +1,4 @@
-package com.ecom.cms.Category;
+package com.ecom.cms.Brand;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
