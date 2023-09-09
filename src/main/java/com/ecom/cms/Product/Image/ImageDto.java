@@ -1,4 +1,4 @@
-package com.ecom.cms.Image;
+package com.ecom.cms.Product.Image;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

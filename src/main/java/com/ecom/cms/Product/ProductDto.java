@@ -1,6 +1,6 @@
 package com.ecom.cms.Product;
 
-import com.ecom.cms.Image.ImageDto;
+import com.ecom.cms.Product.Image.ImageDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

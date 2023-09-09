@@ -1,7 +1,6 @@
-package com.ecom.cms.Order.OrderItem;
+package com.ecom.cms.Purchase.Item;
 
-import com.ecom.cms.Order.Order;
-import com.ecom.cms.Product.Product;
+import com.ecom.cms.Purchase.Purchase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,31 +19,33 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "order_item")
-public class OrderItem implements Serializable {
+@Table(name = "item")
+public class Item implements Serializable {
 
-    private static  final long serialVersionUid = 1L;
+    private static  final long serialVersionUid = 123456L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "product_id")
+    private Integer productId;
+
+    @Column(name = "product_name")
+    private String productName;
+
+    @Column(name = "product_price")
+    private BigDecimal productPrice;
+
     @Column(name = "quantity")
     private Integer quantity;
-
-    @Column(name = "price_per_unit")
-    private BigDecimal pricePerUnit;
 
     @Column(name = "price_per_item")
     private BigDecimal pricePerItem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
-
     @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
 }

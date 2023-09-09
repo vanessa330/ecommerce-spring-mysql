@@ -1,8 +1,8 @@
 package com.ecom.cms.Product;
 
 import com.ecom.cms.Brand.Brand;
-import com.ecom.cms.Image.Image;
-import com.ecom.cms.Image.ImageRepository;
+import com.ecom.cms.Product.Image.Image;
+import com.ecom.cms.Product.Image.ImageRepository;
 import com.ecom.cms.JWT.JwtFilter;
 import com.ecom.cms.Category.Category;
 import com.ecom.cms.UTILS.MainConstants;

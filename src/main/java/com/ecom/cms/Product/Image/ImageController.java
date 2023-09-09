@@ -1,4 +1,4 @@
-package com.ecom.cms.Image;
+package com.ecom.cms.Product.Image;
 
 import com.ecom.cms.JWT.JwtFilter;
 import com.ecom.cms.UTILS.MainConstants;

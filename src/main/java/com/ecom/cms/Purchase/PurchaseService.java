@@ -1,4 +1,4 @@
-package com.ecom.cms.Order;
+package com.ecom.cms.Purchase;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public interface OrderService {
+public interface PurchaseService {
 
-    ResponseEntity<String> addOrder(Map<String, Object> requestMap);
+    ResponseEntity<String> addPurchase(Map<String, Object> requestMap);
 
-    List<OrderDto> getAllOrders();
+    List<PurchaseDto> getAllPurchases();
 
-    List<OrderDto> getByUser(int userId);
+    List<PurchaseDto> getByUser(int userId);
 
     ResponseEntity<String> updateStatus(Map<String, Object> requestMap);
 }

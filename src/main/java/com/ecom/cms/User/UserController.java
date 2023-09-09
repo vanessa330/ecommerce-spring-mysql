@@ -151,6 +151,11 @@ public class UserController implements UserService {
         return null;
     }
 
+    //    JSON requestMap
+//    {
+//        "id": 3,
+//        "status": "suspended"
+//    }
     @Override
     public ResponseEntity<String> updateStatus(Map<String, Object> requestMap) {
         try {
@@ -173,6 +178,11 @@ public class UserController implements UserService {
         return MainUtils.getResponseEntity(MainConstants.ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //    JSON requestMap
+//{
+//    "id": 2,
+//    "role": "admin"
+//}
     @Override
     public ResponseEntity<String> updateRole(Map<String, Object> requestMap) {
         try {

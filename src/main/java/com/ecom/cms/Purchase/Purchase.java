@@ -1,6 +1,6 @@
-package com.ecom.cms.Order;
+package com.ecom.cms.Purchase;
 
-import com.ecom.cms.Order.OrderItem.OrderItem;
+import com.ecom.cms.Purchase.Item.Item;
 import com.ecom.cms.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,11 +25,11 @@ import java.util.List;
 @AllArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "order") // escape SQL reserved key
+@Table(name = "purchase")
 @EntityListeners(AuditingEntityListener.class)
-public class Order implements Serializable {
+public class Purchase implements Serializable {
 
-    private static final long serialVersionUID = 123457L;
+    private static final long serialVersionUID = 123456L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,8 +48,8 @@ public class Order implements Serializable {
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPrice;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+    private List<Item> items;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

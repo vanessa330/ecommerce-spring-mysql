@@ -1,7 +1,7 @@
-package com.ecom.cms.Order;
+package com.ecom.cms.Purchase;
 
-import com.ecom.cms.Order.OrderItem.OrderItemDto;
-import com.ecom.cms.User.User;
+import com.ecom.cms.Purchase.Item.ItemDto;
+import com.ecom.cms.User.UserDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class OrderDto {
+public class PurchaseDto {
 
     Integer id;
 
@@ -23,9 +23,9 @@ public class OrderDto {
 
     BigDecimal totalPrice;
 
-    List<OrderItemDto> orderItems; // table : order_item
+    List<ItemDto> items; // table : item
 
-    User user; // table : user
+    UserDto user; // table : user
 
     LocalDateTime createdDate;
 
