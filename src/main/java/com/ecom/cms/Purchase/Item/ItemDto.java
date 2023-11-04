@@ -19,6 +19,8 @@ public class ItemDto {
 
     Integer quantity;
 
+    String productColor;
+
     BigDecimal pricePerItem;
 
 }

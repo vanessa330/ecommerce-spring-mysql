@@ -41,6 +41,9 @@ public class Item implements Serializable {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Column(name = "product_color")
+    private String productColor;
+
     @Column(name = "price_per_item")
     private BigDecimal pricePerItem;
 

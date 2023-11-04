@@ -50,7 +50,7 @@ public class PurchaseController implements PurchaseService {
             Purchase newPurchase = buildPurchaseFromMap(requestMap);
             purchaseRepository.save(newPurchase);
 
-            return MainUtils.getResponseEntity("Added successfully", HttpStatus.OK);
+            return MainUtils.getResponseEntity("Purchase added successfully", HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -60,10 +60,10 @@ public class PurchaseController implements PurchaseService {
     //        JSON requestMap
 //    {
 //        "items": [{
-//            "productId": 1, "quantity": 2
+//            "productId": 1, "quantity": 2, "color": "red"
 //        },
 //        {
-//            "productId": 2, "quantity": 3
+//            "productId": 2, "quantity": 3, "color": ""
 //        }],
 //         "userId": 1
 //    }
@@ -81,11 +81,14 @@ public class PurchaseController implements PurchaseService {
 
             int quantity = ((Number) itemMap.get("quantity")).intValue();
 
+            String productColor = (String) itemMap.get("color");
+
             Item newItem = Item.builder()
                     .productId(product.getId())
                     .productName(product.getName())
                     .productPrice(product.getPrice())
                     .quantity(quantity)
+                    .productColor(productColor)
                     .pricePerItem(product.getPrice().multiply(BigDecimal.valueOf(quantity)))
                     .build();
 
