@@ -110,7 +110,8 @@ public class UserController implements UserService {
                     return new ResponseEntity<String>("{\"token\":\"" +
                             jwtUtil.generateToken(myUserDetailsService.getUserDetail().getEmail(),
                                     myUserDetailsService.getUserDetail().getRole())
-                            + "\", \"name\": \"" + myUserDetailsService.getUserDetail().getName() + "\"}", HttpStatus.OK);
+                            + "\", \"id\": " + myUserDetailsService.getUserDetail().getId()
+                            + ", \"name\": \"" + myUserDetailsService.getUserDetail().getName() + "\"}", HttpStatus.OK);
                 } else {
                     return new ResponseEntity<String>("{\"message\":\"Your account has been suspended.\"}",
                             HttpStatus.BAD_REQUEST);

@@ -110,7 +110,7 @@ public class PurchaseController implements PurchaseService {
 
 //        3. In the Purchase model, set the user
         int userId;
-        if (requestMap.containsKey("userId")) {
+        if (requestMap.containsKey("userId") && requestMap.get("userID") != null) {
             userId = ((Number) requestMap.get("userId")).intValue();
         } else {
             userId = 1; // Set default value to 1 for the guest
