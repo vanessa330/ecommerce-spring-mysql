@@ -28,5 +28,5 @@ public interface UserService {
 
     ResponseEntity<String> resetPassword(String oneTimeToken, Map<String, String> requestMap);
 
-    ResponseEntity<String> updateWishlist(Map<String, String> requestMap);
+    UserDto updateWishlist(Map<String, String> requestMap);
 }

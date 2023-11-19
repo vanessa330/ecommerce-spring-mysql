@@ -17,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -50,6 +52,9 @@ public class UserController implements UserService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
 //        log.info("Inside signUp{}", requestMap);
@@ -74,8 +79,7 @@ public class UserController implements UserService {
     }
 
     private boolean validateSignUpMap(Map<String, String> requestMap) {
-        if (requestMap.containsKey("name") && requestMap.containsKey("email")
-                && requestMap.containsKey("password")) {
+        if (requestMap.containsKey("name") && requestMap.containsKey("email") && requestMap.containsKey("password")) {
             return true;
         } else {
             return false;
@@ -102,28 +106,19 @@ public class UserController implements UserService {
     @Override
     public ResponseEntity<String> login(Map<String, String> requestMap) {
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(requestMap.get("email"), requestMap.get("password"))
-            );
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestMap.get("email"), requestMap.get("password")));
             if (auth.isAuthenticated()) {
                 if (myUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("active")) {
-                    return new ResponseEntity<String>("{\"token\":\"" +
-                            jwtUtil.generateToken(myUserDetailsService.getUserDetail().getEmail(),
-                                    myUserDetailsService.getUserDetail().getRole())
-                            + "\", \"id\": " + myUserDetailsService.getUserDetail().getId()
-                            + ", \"name\": \"" + myUserDetailsService.getUserDetail().getName() + "\"}", HttpStatus.OK);
+                    return new ResponseEntity<String>("{\"token\":\"" + jwtUtil.generateToken(myUserDetailsService.getUserDetail().getEmail(), myUserDetailsService.getUserDetail().getRole()) + "\", \"id\": " + myUserDetailsService.getUserDetail().getId() + ", \"name\": \"" + myUserDetailsService.getUserDetail().getName() + "\"}", HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<String>("{\"message\":\"Your account has been suspended.\"}",
-                            HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<String>("{\"message\":\"Your account has been suspended.\"}", HttpStatus.BAD_REQUEST);
                 }
             } else {
-                return new ResponseEntity<String>("{\"message\":\"Bad Credentials.\"}",
-                        HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<String>("{\"message\":\"Bad Credentials.\"}", HttpStatus.BAD_REQUEST);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ResponseEntity<String>("{\"message\":\"An error occurred.\"}",
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>("{\"message\":\"An error occurred.\"}", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -134,9 +129,7 @@ public class UserController implements UserService {
         }
 
         List<User> userList = userRepository.findAll();
-        List<UserDto> userDtoList = userList.stream()
-                .map(user -> modelMapper.map(user, UserDto.class))
-                .collect(Collectors.toList());
+        List<UserDto> userDtoList = userList.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
         return userDtoList;
     }
 
@@ -211,11 +204,9 @@ public class UserController implements UserService {
         allAdmin.remove(jwtFilter.getCurrentUser());
 
         if (role.equalsIgnoreCase("admin")) {
-            emailUtils.sendNotification(jwtFilter.getCurrentUser(), "Admin Role Approved",
-                    "USER: " + user + "\n was given admin privileges by \nADMIN: " + jwtFilter.getCurrentUser(), allAdmin);
+            emailUtils.sendNotification(jwtFilter.getCurrentUser(), "Admin Role Approved", "USER: " + user + "\n was given admin privileges by \nADMIN: " + jwtFilter.getCurrentUser(), allAdmin);
         } else {
-            emailUtils.sendNotification(jwtFilter.getCurrentUser(), "Admin Role Disabled",
-                    "USER: " + user + "\n admin privileges were revoked by \nADMIN: " + jwtFilter.getCurrentUser(), allAdmin);
+            emailUtils.sendNotification(jwtFilter.getCurrentUser(), "Admin Role Disabled", "USER: " + user + "\n admin privileges were revoked by \nADMIN: " + jwtFilter.getCurrentUser(), allAdmin);
         }
     }
 
@@ -302,21 +293,17 @@ public class UserController implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> updateWishlist(Map<String, String> requestMap) {
-        try {
-            Optional<User> currentUser = Optional.ofNullable(userRepository.findByEmail(jwtFilter.getCurrentUser()));
+    @Transactional
+    public UserDto updateWishlist(Map<String, String> requestMap) {
+        Optional<User> currentUser = Optional.ofNullable(userRepository.findByEmail(jwtFilter.getCurrentUser()));
 
-            if (!currentUser.isPresent()) {
-                return MainUtils.getResponseEntity("User doesn't exist.", HttpStatus.NOT_ACCEPTABLE);
-            }
+        User user = currentUser.get();
+        userRepository.updateWishlist(requestMap.get("wishlist"), user.getEmail());
+        entityManager.refresh(user);
 
-            User user = currentUser.get();
-            userRepository.updateWishlist(requestMap.get("wishlist"), user.getEmail());
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        return userDto;
 
-            return MainUtils.getResponseEntity("User wishlist updated successfully.", HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return MainUtils.getResponseEntity(MainConstants.ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

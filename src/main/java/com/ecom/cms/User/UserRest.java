@@ -65,7 +65,7 @@ public class UserRest {
     }
 
     @PatchMapping(path = "/updateWishlist")
-    public ResponseEntity<String> updateWishlist(@RequestBody Map<String, String> requestMap) {
+    public UserDto updateWishlist(@RequestBody Map<String, String> requestMap) {
         return userService.updateWishlist(requestMap);
     }
 }
